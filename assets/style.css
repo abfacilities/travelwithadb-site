@@ -68,3 +68,25 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;p
 .form-row{display:grid;gap:16px;max-width:520px;margin-top:24px}
 .form-row input,.form-row textarea{padding:13px;border:1px solid var(--border);border-radius:3px;font-family:inherit;font-size:1rem;background:#fff}
 .form-row label{font-weight:600;font-size:.85rem;color:var(--navy)}
+
+/* --- Mobile nav + responsive fixes (2026-08-19) --- */
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:0;cursor:pointer;padding:0;order:2}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+@media (max-width:860px){
+  header.site .nav-row{flex-wrap:wrap}
+  .nav-cta{order:1}
+  .nav-toggle{display:flex}
+  nav.main{display:none;flex-direction:column;align-items:flex-start;width:100%;order:3;padding:14px 0 6px;border-top:1px solid rgba(201,161,59,.2)}
+  nav.main.open{display:flex}
+  nav.main a{margin:8px 0;font-size:.95rem}
+  .hero{padding:64px 0 52px}
+  .hero h1{font-size:clamp(2rem,9vw,3rem);line-height:1.1}
+  .hero p.sub{font-size:1rem}
+  .featured{grid-template-columns:1fr;gap:28px}
+  .featured .embeds{grid-template-columns:1fr}
+  footer.site .grid{grid-template-columns:1fr;gap:28px}
+}
