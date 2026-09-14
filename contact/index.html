@@ -56,14 +56,14 @@
     </div>
     <div>
       <h2>Send a message</h2>
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you/" class="form-row">
-        <input type="hidden" name="form-name" value="contact">
+      <form id="contact-form" class="form-row">
         <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
         <input type="text" name="name" placeholder="Full name" required>
         <input type="email" name="email" placeholder="Email address" required>
         <input type="text" name="brand" placeholder="Hotel / Brand">
         <textarea name="message" rows="5" placeholder="Tell me about the collaboration you have in mind" required></textarea>
         <button type="submit" class="btn" style="border:none;cursor:pointer">Send Message</button>
+        <p id="contact-form-status" style="margin-top:12px;font-size:.9rem"></p>
       </form>
     </div>
   </div>
@@ -97,6 +97,49 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('contact-form-status');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    status.style.color = '';
+    status.textContent = 'Sending...';
+    var data = {
+      name: form.name.value,
+      email: form.email.value,
+      brand: form.brand.value,
+      message: form.message.value,
+      'bot-field': form['bot-field'].value
+    };
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function (res) { return res.json().then(function (body) { return { ok: res.ok, body: body }; }); })
+      .then(function (result) {
+        btn.disabled = false;
+        if (result.ok) {
+          status.style.color = 'green';
+          status.textContent = "Thanks \u2014 got your message, I'll be in touch soon.";
+          form.reset();
+        } else {
+          status.style.color = '#c0392b';
+          status.textContent = (result.body && result.body.error) || 'Something went wrong. Please try again or message me directly.';
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        status.style.color = '#c0392b';
+        status.textContent = 'Something went wrong. Please try again or message me directly.';
+      });
+  });
+})();
+</script>
 <script src="/assets/nav.js" defer></script>
 </body>
 </html>
