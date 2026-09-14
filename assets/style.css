@@ -66,7 +66,8 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;p
 .vlog-list h3{margin:.3em 0;font-size:1.3rem}
 .vlog-list a.read{font-weight:700;color:var(--navy)}
 .form-row{display:grid;gap:16px;max-width:520px;margin-top:24px}
-.form-row input,.form-row textarea{padding:13px;border:1px solid var(--border);border-radius:3px;font-family:inherit;font-size:1rem;background:#fff}
+.form-row input,.form-row textarea{padding:13px;border:1px solid var(--border);border-radius:3px;font-family:inherit;font-size:1rem;background:#fff;transition:border-color .15s ease,box-shadow .15s ease}
+.form-row input:focus,.form-row textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,161,59,.18)}
 .form-row label{font-weight:600;font-size:.85rem;color:var(--navy)}
 
 /* --- Mobile nav + responsive fixes (2026-08-19) --- */
