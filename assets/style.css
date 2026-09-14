@@ -91,3 +91,16 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;p
   .featured .embeds{grid-template-columns:1fr}
   footer.site .grid{grid-template-columns:1fr;gap:28px}
 }
+
+.whatsapp-float{
+  position:fixed;bottom:22px;right:22px;z-index:200;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  transition:transform .15s ease;
+}
+.whatsapp-float:hover{transform:scale(1.08)}
+@media (max-width:600px){
+  .whatsapp-float{width:50px;height:50px;bottom:16px;right:16px}
+}
