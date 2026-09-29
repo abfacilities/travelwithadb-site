@@ -101,6 +101,60 @@
   </div>
 </section>
 
+<section style="background:var(--bg)">
+  <div class="container">
+    <div class="section-eyebrow">Stay in the Loop</div>
+    <h2>Get New Travel Content in Your Inbox</h2>
+    <p class="section-sub" style="max-width:560px">Occasional emails when a new reel, hotel collaboration or destination guide drops &mdash; no spam, unsubscribe any time.</p>
+    <form id="newsletter-form" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;max-width:480px">
+      <input type="email" id="newsletter-email" name="email" required placeholder="you@example.com" style="flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:1rem">
+      <input type="text" name="bot-field" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <p id="newsletter-form-status" style="margin-top:8px;font-size:.88rem"></p>
+  </div>
+</section>
+
+<script>
+(function () {
+  var form = document.getElementById('newsletter-form');
+  var status = document.getElementById('newsletter-form-status');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    status.style.color = 'var(--muted)';
+    status.textContent = 'Sending...';
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email.value,
+        'bot-field': form['bot-field'].value
+      })
+    })
+      .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+      .then(function (result) {
+        btn.disabled = false;
+        if (result.ok) {
+          status.style.color = 'var(--accent)';
+          status.textContent = 'Thanks, you\'re on the list.';
+          form.reset();
+        } else {
+          status.style.color = '#b3261e';
+          status.textContent = (result.data && result.data.error) || 'Something went wrong. Please try again.';
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        status.style.color = '#b3261e';
+        status.textContent = 'Something went wrong. Please try again or email hello@travelwithadb.com.';
+      });
+  });
+})();
+</script>
+
 <section class="cta-band">
   <div class="container">
     <h2>Let's create something unforgettable</h2>
