@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://travelwithadb.com/sitemap.xml
+Sitemap: https://www.travelwithadb.com/sitemap.xml
